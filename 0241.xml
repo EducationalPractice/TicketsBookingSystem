@@ -1,0 +1,57 @@
+<Train>
+  <Number>
+    0241
+  </Number>
+  <FullName>
+    Lviv-Dnipro
+  </FullName>
+  <Stations>
+    <Station>
+      <Place>lviv</Place>
+      <Time>08:00</Time>
+      <Distance>0</Distance>
+    </Station>
+    <Station>
+      <Place>zhytomyr</Place>
+      <Time>10:00</Time>
+      <Distance>250</Distance>
+    </Station>
+    <Station>
+      <Place>cherkasy</Place>
+      <Time>15:15</Time>
+      <Distance>640</Distance>
+    </Station>
+    <Station>
+      <Place>dnipro</Place>
+      <Time>16:15</Time>
+      <Distance>880</Distance>
+    </Station>
+  </Stations>
+
+  <ReservedSeat>1 2 3 4</ReservedSeat>
+  <Compartment>5 6</Compartment>
+  <Luxe>7</Luxe>
+
+  <Dates>
+    <Date date="2016.09.30">
+      <Orders>
+        <Order>
+          <From>zhytomyr</From>
+          <Where>dnipro</Where>
+          <RailCar>4</RailCar>
+          <Seat>1</Seat>
+        </Order>
+      </Orders>
+    </Date>
+    <Date date="2016.10.02">
+      <Orders>
+        <Order>
+          <From>lviv</From>
+          <Where>dnipro</Where>
+          <RailCar>4</RailCar>
+          <Seat>2</Seat>
+        </Order>
+      </Orders>
+    </Date>
+  </Dates>
+</Train>

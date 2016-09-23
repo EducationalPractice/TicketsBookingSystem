@@ -1,0 +1,50 @@
+<Train>
+  <Number>
+    4440
+  </Number>
+  <FullName>
+    Lviv-Kyiv
+  </FullName>
+  <Stations>
+    <Station>
+      <Place>lviv</Place>
+      <Time>12:00</Time>
+      <Distance>0</Distance>
+    </Station>
+    <Station>
+      <Place>zhytomyr</Place>
+      <Time>14:00</Time>
+      <Distance>250</Distance>
+    </Station>
+    <Station>
+      <Place>kyiv</Place>
+      <Time>16:00</Time>
+      <Distance>640</Distance>
+    </Station>
+  </Stations>
+  <ReservedSeat>1 2 3 4</ReservedSeat>
+  <Compartment>5 6</Compartment>
+  <Luxe>7</Luxe>
+  <Dates>
+    <Date date="2016.09.30">
+      <Orders>
+        <Order>
+          <From>lviv</From>
+          <Where>zhytomyr</Where>
+          <RailCar>4</RailCar>
+          <Seat>21</Seat>
+        </Order>
+      </Orders>
+    </Date>
+    <Date date="2016.10.02">
+      <Orders>
+        <Order>
+          <From>lviv</From>
+          <Where>kyiv</Where>
+          <RailRailCar>4</RailRailCar>
+          <Seat>2</Seat>
+        </Order>
+      </Orders>
+    </Date>
+  </Dates>
+</Train>

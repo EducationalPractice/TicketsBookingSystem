@@ -98,8 +98,8 @@ static inline int TIXML_VSCPRINTF(const char* format, va_list va)
 
 static const char LINE_FEED = (char)0x0a;			// all line endings are normalized to LF
 static const char LF = LINE_FEED;
-static const char CARRIAGE_RETURN = (char)0x0d;			// CR gets filtered out
-static const char CR = CARRIAGE_RETURN;
+static const char RailCarRIAGE_RETURN = (char)0x0d;			// CR gets filtered out
+static const char CR = RailCarRIAGE_RETURN;
 static const char SINGLE_QUOTE = '\'';
 static const char DOUBLE_QUOTE = '\"';
 
@@ -401,7 +401,7 @@ namespace tinyxml2
 
 		output += *length;
 
-		// Scary scary fall throughs.
+		// SRailCary sRailCary fall throughs.
 		switch (*length) {
 		case 4:
 			--output;
