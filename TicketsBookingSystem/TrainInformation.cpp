@@ -87,12 +87,7 @@ void TrainInformation::chainRailCars()
 	}
 }
 
-//void TrainInformation::setNumb(string n)
-//{
-//	number = n;
-//}
-
-//bool operator==(const TrainInformation& one, const TrainInformation& two)
-//{
-//	return one.getNumber() == two.getNumber();
-//}
+void TrainInformation::setTrainNumber(const string& number)
+{
+	this->number = number;
+}

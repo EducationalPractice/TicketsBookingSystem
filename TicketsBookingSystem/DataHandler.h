@@ -33,9 +33,6 @@ private:
 	static void readOrders(tinyxml2::XMLNode* pDate,
 	                       vector<RailCarInformation>& RailCars);
 
-	static void processOrders(tinyxml2::XMLNode* pRoot,
-	                          vector<RailCarInformation>& RailCars, const string& date);
-
 	static void loadRailCars(tinyxml2::XMLNode* pRoot, TrainInformation& train);
 
 

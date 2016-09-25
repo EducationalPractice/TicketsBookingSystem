@@ -2,6 +2,17 @@
 #include <fstream>
 #include <list>
 
+string skipSpaces(const string& str)
+{
+	istringstream stream(str);
+
+	string buf;
+
+	stream >> buf;
+
+	return buf;
+}
+
 DataHandler::DataHandler()
 {
 }
@@ -67,12 +78,16 @@ bool DataHandler::isBlocked(const SeatOrderInformation& order,
 
 void DataHandler::setTrainName(tinyxml2::XMLNode* pRoot, TrainInformation& train)
 {
-	train.setFullName(pRoot->FirstChildElement("FullName")->GetText());
+	train.setFullName(skipSpaces(
+		string(pRoot->FirstChildElement("FullName")->GetText())
+			));
 }
 
 void DataHandler::setTrainNumber(tinyxml2::XMLNode* pRoot, TrainInformation& train)
 {
-	train.setFullName(pRoot->FirstChildElement("Number")->GetText());
+	train.setTrainNumber(skipSpaces(
+		string(pRoot->FirstChildElement("Number")->GetText())
+			));
 }
 
 void DataHandler::proccesRailCarNums(const string& data, vector<size_t>& RailCarNums)

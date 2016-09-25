@@ -45,6 +45,7 @@ class SeatOrderInformation
 {
 	string from;
 	string where;
+
 	size_t seatNum;
 public:
 
@@ -101,6 +102,7 @@ class TrainInformation
 {
 	string number;
 	string fullName;
+
 	string date;
 
 	vector<StationInformation> stations;
@@ -132,4 +134,5 @@ public:
 
 	void chainRailCars();
 
+	void setTrainNumber(const string& number);
 };

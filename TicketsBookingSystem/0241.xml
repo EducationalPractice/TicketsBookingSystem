@@ -1,10 +1,6 @@
 <Train>
-  <Number>
-    0241
-  </Number>
-  <FullName>
-    Lviv-Dnipro
-  </FullName>
+  <Number>0241</Number>
+  <FullName>Lviv-Dnipro</FullName>
   <Stations>
     <Station>
       <Place>lviv</Place>

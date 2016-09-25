@@ -1,10 +1,6 @@
 <Train>
-  <Number>
-    4440
-  </Number>
-  <FullName>
-    Lviv-Kyiv
-  </FullName>
+  <Number>4440</Number>
+  <FullName>Lviv-Kyiv</FullName>
   <Stations>
     <Station>
       <Place>lviv</Place>
@@ -41,7 +37,7 @@
         <Order>
           <From>lviv</From>
           <Where>kyiv</Where>
-          <RailRailCar>4</RailRailCar>
+          <RailCar>4</RailCar>
           <Seat>2</Seat>
         </Order>
       </Orders>
