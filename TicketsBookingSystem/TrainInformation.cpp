@@ -86,3 +86,13 @@ void TrainInformation::chainRailCars()
 		el.setStations(stations);
 	}
 }
+
+//void TrainInformation::setNumb(string n)
+//{
+//	number = n;
+//}
+
+//bool operator==(const TrainInformation& one, const TrainInformation& two)
+//{
+//	return one.getNumber() == two.getNumber();
+//}

@@ -9,7 +9,6 @@ class CustomerOrder
 private:
 	string where;
 	string from;
-
 	string date;
 
 	string trainNumber;

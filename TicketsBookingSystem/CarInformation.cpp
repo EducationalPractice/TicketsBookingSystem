@@ -37,7 +37,6 @@ const string& StationInformation::getTimeOfArrival() const
 	return timeOfArrival;
 }
 
-
 void StationInformation::setName(const string& name)
 {
 	this->name = name;
