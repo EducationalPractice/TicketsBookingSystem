@@ -25,9 +25,8 @@ private:
 
 	static void setTrainNumber(tinyxml2::XMLNode* pRoot, TrainInformation& train);
 
-	static void proccesRailCarNums(const string& data, vector<size_t>& RailCarNums);
 
-	static void readOrder(tinyxml2::XMLNode* pOrder,
+	static void readOrder(tinyxml2::XMLElement* pOrder,
 	                      vector<RailCarInformation>& RailCars);
 
 	static void readOrders(tinyxml2::XMLNode* pDate,
@@ -57,14 +56,11 @@ private:
 	static void chain(vector<TrainInformation>& trains);
 
 	static tinyxml2::XMLElement* formCustomerOrder(tinyxml2::XMLDocument& doc,
-		size_t place);
+	                                               size_t place);
 
 	static tinyxml2::XMLElement* getDateLink(tinyxml2::XMLNode* pRoot,
-		const string& date);
+	                                         const string& date);
 
-	static void loadRailCarTypes(tinyxml2::XMLNode* pRoot,
-		vector<RailCarInformation>& RailCars,
-		RailCarType type);
 
 public:
 

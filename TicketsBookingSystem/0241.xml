@@ -1,53 +1,25 @@
 <Train>
-  <Number>0241</Number>
+  <Number>4440</Number>
   <FullName>Lviv-Dnipro</FullName>
   <Stations>
-    <Station>
-      <Place>lviv</Place>
-      <Time>08:00</Time>
-      <Distance>0</Distance>
-    </Station>
-    <Station>
-      <Place>zhytomyr</Place>
-      <Time>10:00</Time>
-      <Distance>250</Distance>
-    </Station>
-    <Station>
-      <Place>cherkasy</Place>
-      <Time>15:15</Time>
-      <Distance>640</Distance>
-    </Station>
-    <Station>
-      <Place>dnipro</Place>
-      <Time>16:15</Time>
-      <Distance>880</Distance>
-    </Station>
+    <Station place="lviv" time="08:00" distance="0" />
+    <Station place="zhytomyr" time="10:00" distance="250" />
+    <Station place="cherkasy" time="14:00" distance="640" />
+    <Station place="dnipro" time="15:45" distance="750" />
   </Stations>
-
-  <ReservedSeat>1 2 3 4</ReservedSeat>
-  <Compartment>5 6</Compartment>
-  <Luxe>7</Luxe>
-
-  <Dates>
-    <Date date="2016.09.30">
-      <Orders>
-        <Order>
-          <From>zhytomyr</From>
-          <Where>dnipro</Where>
-          <RailCar>4</RailCar>
-          <Seat>1</Seat>
-        </Order>
-      </Orders>
-    </Date>
-    <Date date="2016.10.02">
-      <Orders>
-        <Order>
-          <From>lviv</From>
-          <Where>dnipro</Where>
-          <RailCar>4</RailCar>
-          <Seat>2</Seat>
-        </Order>
-      </Orders>
-    </Date>
-  </Dates>
+  <RailCars>
+    <RailCar number="1" type="P" />
+    <RailCar number="2" type="P" />
+    <RailCar number="3" type="P" />
+    <RailCar number="4" type="P" />
+    <RailCar number="5" type="C" />
+    <RailCar number="6" type="C" />
+    <RailCar number="7" type="L" />
+  </RailCars>
+  <Orders date="2016.09.30">
+    <Order from="lviv" where="dnipro" railCarNum="4" seatNum="21"/>
+  </Orders>
+  <Orders date="2016.10.02">
+    <Order from="lviv" where="kyiv" railCarNum="4" seatNum="11"/>
+  </Orders>
 </Train>

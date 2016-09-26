@@ -1,17 +1,5 @@
 #include "DataHandler.h"
 #include <fstream>
-#include <list>
-
-string skipSpaces(const string& str)
-{
-	istringstream stream(str);
-
-	string buf;
-
-	stream >> buf;
-
-	return buf;
-}
 
 DataHandler::DataHandler()
 {
@@ -40,7 +28,6 @@ void DataHandler::findSuitedTrains(vector<TrainInformation>& trains)
 	}
 	else
 	{
-		list<string> trainNums;
 		ifstream trainData("ListOfTrains.txt");
 
 		while (trainData >> num)
@@ -78,40 +65,26 @@ bool DataHandler::isBlocked(const SeatOrderInformation& order,
 
 void DataHandler::setTrainName(tinyxml2::XMLNode* pRoot, TrainInformation& train)
 {
-	train.setFullName(skipSpaces(
-		string(pRoot->FirstChildElement("FullName")->GetText())
-			));
+	train.setFullName(pRoot->FirstChildElement("FullName")->GetText());
 }
 
 void DataHandler::setTrainNumber(tinyxml2::XMLNode* pRoot, TrainInformation& train)
 {
-	train.setTrainNumber(skipSpaces(
-		string(pRoot->FirstChildElement("Number")->GetText())
-			));
+	train.setFullName(pRoot->FirstChildElement("Number")->GetText());
 }
 
-void DataHandler::proccesRailCarNums(const string& data, vector<size_t>& RailCarNums)
-{
-	std::istringstream stream(data);
-
-	size_t num;
-
-	while (stream >> num)
-		RailCarNums.push_back(num);
-}
-
-void DataHandler::readOrder(tinyxml2::XMLNode* pOrder,
+void DataHandler::readOrder(tinyxml2::XMLElement* pOrder,
                             vector<RailCarInformation>& RailCars)
 {
 	SeatOrderInformation order;
 	string from, where;
 	size_t railCarNum, seat;
 
-	from = pOrder->FirstChildElement("From")->GetText();
-	where = pOrder->FirstChildElement("Where")->GetText();
+	from = pOrder->Attribute("from");
+	where = pOrder->Attribute("where");
 
-	pOrder->FirstChildElement("RailCar")->QueryUnsignedText(&railCarNum);
-	pOrder->FirstChildElement("Seat")->QueryUnsignedText(&seat);
+	pOrder->QueryUnsignedAttribute("railCarNum", &railCarNum);
+	pOrder->QueryUnsignedAttribute("seatNum", &seat);
 
 	order.setFrom(from);
 	order.setWhere(where);
@@ -129,8 +102,7 @@ void DataHandler::readOrder(tinyxml2::XMLNode* pOrder,
 void DataHandler::readOrders(tinyxml2::XMLNode* pDate,
                              vector<RailCarInformation>& RailCars)
 {
-	tinyxml2::XMLElement* pOrder = pDate->FirstChildElement("Orders")
-	                                    ->FirstChildElement("Order");
+	tinyxml2::XMLElement* pOrder = pDate->FirstChildElement("Order");
 
 	while (pOrder != nullptr)
 	{
@@ -140,57 +112,39 @@ void DataHandler::readOrders(tinyxml2::XMLNode* pDate,
 	}
 }
 
-void DataHandler::loadRailCarTypes(tinyxml2::XMLNode* pRoot,
-                               vector<RailCarInformation>& RailCars,
-                               RailCarType type)
-{
-	vector<size_t> RailCarNums;
-	string buffer;
-
-	switch (type)
-	{
-	case RailCarType::ReservedSeat:
-		buffer = pRoot
-			->FirstChildElement("ReservedSeat")->GetText();
-		break;
-	case RailCarType::Compartment:
-		buffer = pRoot
-			->FirstChildElement("Compartment")->GetText();
-		break;
-	case RailCarType::Luxe:
-		buffer = pRoot
-			->FirstChildElement("Luxe")->GetText();
-		break;
-	}
-	proccesRailCarNums(buffer, RailCarNums);
-
-	for (auto el : RailCarNums)
-	{
-		RailCars.push_back(RailCarInformation(type, el));
-	}
-}
-
-
 void DataHandler::loadRailCars(tinyxml2::XMLNode* pRoot, TrainInformation& train)
 {
-	vector<RailCarInformation> RailCars;
+	vector<RailCarInformation> railCars;
 
-	loadRailCarTypes(pRoot, RailCars, RailCarType::ReservedSeat);
-	loadRailCarTypes(pRoot, RailCars, RailCarType::Compartment);
-	loadRailCarTypes(pRoot, RailCars, RailCarType::Luxe);
+	tinyxml2::XMLElement* pRailCars = pRoot->FirstChildElement("RailCars");
+	tinyxml2::XMLElement* pRailCar = pRailCars->FirstChildElement("RailCar");
 
-	sort(RailCars.begin(), RailCars.end(), *compareBySeatNum);
+	while (pRailCar != nullptr)
+	{
+		int number; string type;
+		
+		pRailCar->QueryIntAttribute("number", &number);
+		type = pRailCar->Attribute("type");
 
-	train.setRailCars(RailCars);
+		if (type == "P")
+			railCars.push_back(RailCarInformation(RailCarType::ReservedSeat, number));
+		else if (type == "C")
+			railCars.push_back(RailCarInformation(RailCarType::Compartment, number));
+		else
+			railCars.push_back(RailCarInformation(RailCarType::Luxe, number));
 
-	for (auto& el : RailCars)
+		pRailCar = pRailCar->NextSiblingElement("RailCar");
+	}
+	sort(railCars.begin(), railCars.end(), *compareBySeatNum);
+
+	for (auto& el : railCars)
 	{
 		el.setStations(train.getStations());
 	}
 
-	readOrders(getDateLink(pRoot, CustomerOrder::getDate()), RailCars);
+	readOrders(getDateLink(pRoot, CustomerOrder::getDate()), railCars);
 
-	train.setRailCars(RailCars);
+	train.setRailCars(railCars);
 }
 
 
@@ -209,9 +163,11 @@ bool DataHandler::loadTrain(const string& num,
 	getTrainsDates(pRoot, dates);
 
 	if (!(checkTrainByRoute(CustomerOrder::getFrom(),
-	                        CustomerOrder::getWhere(), stations) &&
+		CustomerOrder::getWhere(), stations) &&
 		checkTrainByTime(date, dates)))
+	{
 		return false;
+	}
 	else
 	{
 		setTrainName(pRoot, train);
@@ -231,11 +187,10 @@ StationInformation DataHandler::proccesStation(tinyxml2::XMLElement* pStation)
 	StationInformation station;
 
 	double dbl_buf;
-	station.setName(pStation->FirstChildElement("Place")->GetText());
-	station.setTimeOfArrival(pStation->FirstChildElement("Time")->GetText());
+	station.setName(pStation->Attribute("place"));
+	station.setTimeOfArrival(pStation->Attribute("time"));
 
-	pStation->FirstChildElement("Distance")->QueryDoubleText(&dbl_buf);
-
+	pStation->QueryDoubleAttribute("distance", &dbl_buf);
 	station.setDistance(dbl_buf);
 
 	return station;
@@ -257,8 +212,7 @@ void DataHandler::getTrainStations(tinyxml2::XMLNode* pRoot,
 void DataHandler::getTrainsDates(tinyxml2::XMLNode* pRoot,
                                  vector<string>& dates)
 {
-	tinyxml2::XMLElement* pDates = pRoot->FirstChildElement("Dates");
-	tinyxml2::XMLElement* pDate = pDates->FirstChildElement("Date");
+	tinyxml2::XMLElement* pDate = pRoot->FirstChildElement("Orders");
 
 	while (pDate != nullptr)
 	{
@@ -266,7 +220,7 @@ void DataHandler::getTrainsDates(tinyxml2::XMLNode* pRoot,
 		date = pDate->Attribute("date");
 		dates.push_back(date);
 
-		pDate = pDate->NextSiblingElement("Date");
+		pDate = pDate->NextSiblingElement("Orders");
 	}
 }
 
@@ -311,27 +265,14 @@ tinyxml2::XMLElement* DataHandler::formCustomerOrder(tinyxml2::XMLDocument& doc,
 	string from = CustomerOrder::getFrom();
 	string where = CustomerOrder::getWhere();
 
-	size_t RailCar = CustomerOrder::getRailCarNumber();
+	size_t railCarNum = CustomerOrder::getRailCarNumber();
 
 	tinyxml2::XMLElement* pOrder = doc.NewElement("Order");
 
-	tinyxml2::XMLElement* pFrom = doc.NewElement("From");
-	pFrom->SetText(from.c_str());
-
-	tinyxml2::XMLElement* pWhere = doc.NewElement("Where");
-	pWhere->SetText(where.c_str());
-
-	tinyxml2::XMLElement* pRailCarNumber = doc.NewElement("RailCar");
-	pRailCarNumber->SetText(RailCar);
-
-	tinyxml2::XMLElement* pSeat = doc.NewElement("Seat");
-	pSeat->SetText(place);
-
-	pOrder->InsertEndChild(pFrom);
-	pOrder->InsertEndChild(pWhere);
-	pOrder->InsertEndChild(pRailCarNumber);
-	pOrder->InsertEndChild(pSeat);
-
+	pOrder->SetAttribute("from", from.c_str());
+	pOrder->SetAttribute("where", where.c_str());
+	pOrder->SetAttribute("railCarNum", railCarNum);
+	pOrder->SetAttribute("seatNum", place);
 
 	return pOrder;
 }
@@ -340,13 +281,15 @@ tinyxml2::XMLElement* DataHandler::getDateLink(tinyxml2::XMLNode* pRoot,
                                                const string& date)
 {
 	tinyxml2::XMLElement* xmlDate = pRoot
-		->FirstChildElement("Dates")->FirstChildElement("Date");
+		->FirstChildElement("Orders");
 
 	while (xmlDate != nullptr)
 	{
 		if (xmlDate->Attribute("date") == date)
+		{
 			break;
-		xmlDate = xmlDate->NextSiblingElement("Date");
+		}
+		xmlDate = xmlDate->NextSiblingElement("Orders");
 	}
 
 	return xmlDate;
@@ -361,9 +304,7 @@ void DataHandler::saveData()
 	tinyxml2::XMLDocument doc;
 	doc.LoadFile((trainNumber + ".xml").c_str());
 
-
-	tinyxml2::XMLElement* pOrders = getDateLink(doc.FirstChild(), date)
-		->FirstChildElement("Orders");
+	tinyxml2::XMLElement* pOrders = getDateLink(doc.FirstChild(), date);
 
 	for (auto el : CustomerOrder::getPlaces())
 	{

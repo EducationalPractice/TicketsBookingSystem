@@ -14,9 +14,9 @@ void TableView::drawLine(Printer printer, int i, TrainInformation currentTrain)
 	setCursoreAtPosition(2, i * 2 + 8);
 	printer.print(currentTrain.getNumber());
 	setCursoreAtPosition(9, i * 2 + 8);
-	if (currentTrain.getFullName().length() > 10)
+	if (currentTrain.getFullName().length() > 12)
 	{
-		printer.print(currentTrain.getFullName().substr(10));
+		printer.print(currentTrain.getFullName().substr(0, 12));
 	}
 	else
 	{
