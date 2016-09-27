@@ -1,171 +1,140 @@
-#include "Classes.h"
+#pragma once
+#include <vector>
+#include "CustomerOrder.h"
+#include <iostream>
+
+using namespace std;
 
 
-double getPricePerKM(RailCarType type)
+enum class RailCarType
 {
-	switch (type)
-	{
-	case RailCarType::ReservedSeat:
-		return 0.1;
-	case RailCarType::Compartment:
-		return 0.15;
-	case RailCarType::Luxe:
-		return 0.25;
-	}
-}
+	ReservedSeat,
+	Compartment,
+	Luxe
+};
 
-size_t getTotalNumOfSeats(RailCarType type)
+double getPricePerKM(RailCarType type);
+
+size_t getTotalNumOfSeats(RailCarType type);
+
+class StationInformation
 {
-	switch (type)
-	{
-	case RailCarType::ReservedSeat:
-		return 54;
-	case RailCarType::Compartment:
-		return 36;
-	case RailCarType::Luxe:
-		return 18;
-	}
-}
+	string name;
+	string timeOfArrival;
+	double distanceFromFirst;
 
-double StationInformation::getDistance() const
+public:
+
+	double getDistance() const;
+
+	const string& getTimeOfArrival() const;
+
+
+	void setName(const string& name);
+
+	void setTimeOfArrival(const string& time);
+
+	void setDistance(double distance);
+
+	friend bool operator==(string str, const StationInformation& station);
+
+	friend bool operator==(const StationInformation& station, string str);
+};
+
+class SeatOrderInformation
 {
-	return distanceFromFirst;
-}
+	string from;
+	string where;
 
-const string& StationInformation::getTimeOfArrival() const
+	size_t seatNum;
+public:
+
+	const string& getFrom() const;
+
+	const string& getWhere() const;
+
+	size_t getSeatNum() const;
+
+
+	void setFrom(const string& from);
+	void setWhere(const string& where);
+	void setSeatNum(size_t seat_num);
+};
+
+
+class RailCarInformation
 {
-	return timeOfArrival;
-}
+	RailCarType type;
+	size_t number;
+
+	vector<size_t> bookedSeats;
+
+	const vector<StationInformation>* stations;
+
+public:
+	RailCarInformation();
+
+	explicit RailCarInformation(RailCarType type, size_t number);
+
+	double getTicketPrice() const;
+
+	int getNumOfFreeSeats() const;
+
+	vector<size_t> getBookedSeats() const;
+	
+	size_t getNum() const;
+
+	RailCarType getType() const;
 
 
-void StationInformation::setName(const string& name)
+	//DON'T USE FUNCTIONS BELOW. THEY ARE FOR INTERNAL USE
+	void setStations(const vector<StationInformation>& stations);
+
+	void setType(RailCarType type);
+
+	void setNum(size_t number);
+
+	const vector<StationInformation>* getStations() const;
+
+	void addBookedSeat(size_t num);
+
+};
+
+class TrainInformation
 {
-	this->name = name;
-}
+	string number;
+	string fullName;
 
-void StationInformation::setTimeOfArrival(const string& time)
-{
-	this->timeOfArrival = time;
-}
+	string date;
 
-void StationInformation::setDistance(double distance)
-{
-	this->distanceFromFirst = distance;
-}
+	vector<StationInformation> stations;
+	vector<RailCarInformation> RailCars;
+public:
 
-bool operator==(string str, const StationInformation& station)
-{
-	return str == station.name;
-}
+	int getNumOfFreeSeats() const;
 
-bool operator==(const StationInformation& station, string str)
-{
-	return str == station;
-}
+	const string& getTimeOfDeparture() const;
 
-const string& SeatOrderInformation::getFrom() const
-{
-	return from;
-}
+	const string& getTimeOfArrival() const;
 
-const string& SeatOrderInformation::getWhere() const
-{
-	return where;
-}
+	const vector<RailCarInformation>& getRailCars() const;
 
-size_t SeatOrderInformation::getSeatNum() const
-{
-	return seatNum;
-}
+	const string& getNumber() const;
 
-void SeatOrderInformation::setFrom(const string& from)
-{
-	this->from = from;
-}
+	const string& getFullName() const;
 
-void SeatOrderInformation::setWhere(const string& where)
-{
-	this->where = where;
-}
+	const string& getDate() const;
 
-void SeatOrderInformation::setSeatNum(size_t seat_num)
-{
-	seatNum = seat_num;
-}
+	//DON'T USE FUNCTIONS BELOW. THEY ARE FOR INTERNAL USE
+	const vector<StationInformation>& getStations();
 
-RailCarInformation::RailCarInformation()
-{
-}
+	void setFullName(const string& name);
 
-RailCarInformation::RailCarInformation(RailCarType type, size_t number) :
-	type(type), number(number)
-{
-}
+	void setStations(vector<StationInformation>& stations);
 
+	void setRailCars(vector<RailCarInformation>& RailCars);
 
-double RailCarInformation::getTicketPrice() const
-{
-	string from = CustomerOrder::getFrom();
-	string where = CustomerOrder::getWhere();
+	void chainRailCars();
 
-	double f = 0, s = 0;
-
-
-	for (const auto& el : *stations)
-	{
-		if (from == el)
-			f = el.getDistance();
-		if (where == el)
-			s = el.getDistance();
-	}
-
-	return (s - f) * getPricePerKM(type);
-}
-
-
-int RailCarInformation::getNumOfFreeSeats() const
-{
-	return getTotalNumOfSeats(type) - bookedSeats.size();
-}
-
-vector<size_t> RailCarInformation::getBookedSeats() const
-{
-	return bookedSeats;
-}
-
-
-void RailCarInformation::setStations(const vector<StationInformation>& stations)
-{
-	this->stations = &stations;
-}
-
-void RailCarInformation::setType(RailCarType type)
-{
-	this->type = type;
-}
-
-void RailCarInformation::setNum(size_t number)
-{
-	this->number = number;
-}
-
-size_t RailCarInformation::getNum() const
-{
-	return number;
-}
-
-const vector<StationInformation>* RailCarInformation::getStations() const
-{
-	return stations;
-}
-
-void RailCarInformation::addBookedSeat(size_t num)
-{
-	bookedSeats.push_back(num);
-}
-
-
-RailCarType RailCarInformation::getType() const
-{
-	return type;
-}
+	void setTrainNumber(const string& number);
+};
