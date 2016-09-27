@@ -163,3 +163,9 @@ void RailCarInformation::addBookedSeat(size_t num)
 {
 	bookedSeats.push_back(num);
 }
+
+
+RailCarType RailCarInformation::getType() const
+{
+	return type;
+}
