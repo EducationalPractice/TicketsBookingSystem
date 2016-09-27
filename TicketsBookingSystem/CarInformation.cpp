@@ -122,6 +122,11 @@ double RailCarInformation::getTicketPrice() const
 	return (s - f) * getPricePerKM(type);
 }
 
+RailCarType RailCarInformation::getType() const
+{
+	return type;
+}
+
 
 int RailCarInformation::getNumOfFreeSeats() const
 {
@@ -162,10 +167,4 @@ const vector<StationInformation>* RailCarInformation::getStations() const
 void RailCarInformation::addBookedSeat(size_t num)
 {
 	bookedSeats.push_back(num);
-}
-
-
-RailCarType RailCarInformation::getType() const
-{
-	return type;
 }

@@ -78,13 +78,13 @@ public:
 
 	double getTicketPrice() const;
 
+	RailCarType getType() const;
+
 	int getNumOfFreeSeats() const;
 
 	vector<size_t> getBookedSeats() const;
 	
 	size_t getNum() const;
-
-	RailCarType getType() const;
 
 
 	//DON'T USE FUNCTIONS BELOW. THEY ARE FOR INTERNAL USE

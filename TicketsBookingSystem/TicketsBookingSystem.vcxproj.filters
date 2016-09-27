@@ -45,6 +45,9 @@
     <ClCompile Include="TableView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ChoosePlaceView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Classes.h">
@@ -69,6 +72,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ConsoleFunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ChoosePlaceView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

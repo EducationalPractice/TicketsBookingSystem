@@ -1,12 +1,13 @@
 #include <iostream>
 #include "Views.h"
+#include "ChoosePlaceView.h"
 #include "ConsoleFunctions.h"
 #include "Colors.h"
 
 int main() {
 	showConsoleCursor(false);
 	setConsoleToLucidaConsole();
-	setConsoleSize(60, 30);
+	setConsoleSize(80, 30);
 	View* view = new StartView();
 
 	while (view != NULL)
