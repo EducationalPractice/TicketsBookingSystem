@@ -70,7 +70,7 @@ void DataHandler::setTrainName(tinyxml2::XMLNode* pRoot, TrainInformation& train
 
 void DataHandler::setTrainNumber(tinyxml2::XMLNode* pRoot, TrainInformation& train)
 {
-	train.setFullName(pRoot->FirstChildElement("Number")->GetText());
+	train.setTrainNumber(pRoot->FirstChildElement("Number")->GetText());
 }
 
 void DataHandler::readOrder(tinyxml2::XMLElement* pOrder,
