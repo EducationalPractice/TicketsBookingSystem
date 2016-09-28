@@ -128,7 +128,7 @@ public:
 	//DON'T USE FUNCTIONS BELOW. THEY ARE FOR INTERNAL USE
 	const vector<StationInformation>& getStations();
 
-	void setFullName(const string& name);
+	void setFullName(string name);
 
 	void setStations(vector<StationInformation>& stations);
 
@@ -136,5 +136,5 @@ public:
 
 	void chainRailCars();
 
-	void setTrainNumber(const string& number);
+	void setTrainNumber(string number);
 };

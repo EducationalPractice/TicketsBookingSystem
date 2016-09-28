@@ -63,7 +63,7 @@ const vector<StationInformation>& TrainInformation::getStations()
 	return stations;
 }
 
-void TrainInformation::setFullName(const string& name)
+void TrainInformation::setFullName(string name)
 {
 	fullName = name;
 }
@@ -87,7 +87,7 @@ void TrainInformation::chainRailCars()
 	}
 }
 
-void TrainInformation::setTrainNumber(const string& number)
+void TrainInformation::setTrainNumber(string number)
 {
 	this->number = number;
 }
