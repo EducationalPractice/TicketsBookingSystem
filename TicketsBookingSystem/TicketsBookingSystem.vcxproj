@@ -70,6 +70,7 @@
     <ClCompile Include="ConsoleFunctions.cpp" />
     <ClCompile Include="CustomerOrder.cpp" />
     <ClCompile Include="DataHandler.cpp" />
+    <ClCompile Include="PaymentView.cpp" />
     <ClCompile Include="Printer.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="StartView.cpp" />
@@ -85,6 +86,7 @@
     <ClInclude Include="ConsoleFunctions.h" />
     <ClInclude Include="CustomerOrder.h" />
     <ClInclude Include="DataHandler.h" />
+    <ClInclude Include="PaymentView.h" />
     <ClInclude Include="Printer.h" />
     <ClInclude Include="tinyxml2.h" />
     <ClInclude Include="Views.h" />
