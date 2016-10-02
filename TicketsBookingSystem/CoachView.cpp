@@ -10,7 +10,7 @@ CoachView::CoachView()
 }
 
 HWND handlew = GetConsoleWindow();
-//HDC dc = GetDC(handlew);
+HDC dc = GetDC(handlew);
 
 HPEN redPen = CreatePen(PS_SOLID, 3, RGB(151, 0, 0));
 HPEN bluePen = CreatePen(PS_SOLID, 3, RGB(0, 0, 128));
