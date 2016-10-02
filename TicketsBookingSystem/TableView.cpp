@@ -50,6 +50,8 @@ void TableView::draw()
 			drawLine(printer, i, currentTrain);
 		}
 	}
+	printAtCenterOfLine(28, "Press ESC to exit", printer);
+	
 }
 
 View* TableView::handle()
@@ -86,7 +88,10 @@ View* TableView::handle()
 	{
 		CustomerOrder::setTrainNumber(trains[selectedOption].getNumber());
 		newView = new CoachView();
+		break;
 	}
+	case KEY_ESCAPE:
+		newView = NULL;
 	}
 	return newView;
 }

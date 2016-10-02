@@ -15,17 +15,17 @@ void StartView::draw()
 	Printer printer(Color::High_intensity_white, Color::Blue);
 	printAtCenterOfLine(2, "Welcome to the ticket booking system!", printer);
 	printAtCenterOfLine(3, "Please, enter:", printer);
-	setCursoreAtPosition(10, 8);
+	setCursoreAtPosition(20, 8);
 	printer.print("From:");
-	setCursoreAtPosition(10, 11);
+	setCursoreAtPosition(20, 11);
 	printer.print("Where:");
-	setCursoreAtPosition(10, 14);
+	setCursoreAtPosition(20, 14);
 	printer.print("Date:");
-	setCursoreAtPosition(16, 8);
+	setCursoreAtPosition(26, 8);
 	printer.print(from);
-	setCursoreAtPosition(17, 11);
+	setCursoreAtPosition(27, 11);
 	printer.print(where);
-	setCursoreAtPosition(16, 14);
+	setCursoreAtPosition(26, 14);
 	printer.print(date);
 }
 
@@ -57,7 +57,7 @@ void StartView::enterLine(string& word, bool & isEntered, int maxLength, int& co
 		isEntered = true;
 		counter = 0;
 	}
-	else if (key == KEY_ENTER && word.size() != 0) 
+	else if (key == KEY_ENTER && word.size() != 0)
 	{
 		isEntered = true;
 		counter = 0;
@@ -72,12 +72,12 @@ void StartView::enterLine(string& word, bool & isEntered, int maxLength, int& co
 		word = temp;
 		--counter;
 	}
-	else if (counter != maxLength)
+	else if (counter != maxLength && 
+		((key >= 'a' && key <= 'z') || (key >='A' && key <= 'Z') || (key>='0' && key <= '9') || key == '.' || key == '-'))
 	{
 		word += (char)key;
 		++counter;
 	}
-
 }
 
 
@@ -111,8 +111,9 @@ View* StartView::handle()
 			{
 				dateEntered = false;
 				Printer printer(Color::High_intensity_white, Color::Blue);
-				printAtCenterOfLine(20, "Bad date, try again. Must be XXXX.YY.ZZ.", printer);
-				system("PAUSE");
+				printAtCenterOfLine(20, "Bad date, try again. Must be XXXX.YY.ZZ", printer);
+				printAtCenterOfLine(21, "Press anything to enter date again", printer);
+				int k = _getch();
 				date = "";
 			}
 		}
