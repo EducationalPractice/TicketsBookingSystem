@@ -12,9 +12,9 @@ TableView::TableView()
 
 void TableView::drawLine(Printer printer, int i, TrainInformation currentTrain)
 {
-	setCursoreAtPosition(12, i * 2 + 8);
+	setCursor(12, i * 2 + 8);
 	printer.print(currentTrain.getNumber());
-	setCursoreAtPosition(23, i * 2 + 8);
+	setCursor(23, i * 2 + 8);
 	if (currentTrain.getFullName().length() > 12)
 	{
 		printer.print(currentTrain.getFullName().substr(0, 15));
@@ -23,12 +23,21 @@ void TableView::drawLine(Printer printer, int i, TrainInformation currentTrain)
 	{
 		printer.print(currentTrain.getFullName());
 	}
-	setCursoreAtPosition(43, i * 2 + 8);
+	setCursor(43, i * 2 + 8);
 	printer.print(currentTrain.getTimeOfDeparture());
-	setCursoreAtPosition(53, i * 2 + 8);
+	setCursor(53, i * 2 + 8);
 	printer.print(currentTrain.getTimeOfArrival());
-	setCursoreAtPosition(66, i * 2 + 8);
-	printer.print(to_string(currentTrain.getNumOfFreeSeats()));
+
+
+	auto freePlaces = currentTrain.getNumOfFreeSeatsByTrainTypes();
+	setCursor(61, i * 2 + 8);
+	printer.print(to_string(get<0>(freePlaces)));
+
+	setCursor(66, i * 2 + 8);
+	printer.print(to_string(get<1>(freePlaces)));
+	
+	setCursor(71, i * 2 + 8);
+	printer.print(to_string(get<2>(freePlaces)));
 	cout << endl;
 }
 
@@ -36,7 +45,7 @@ void TableView::draw()
 {
 	Printer printer(Color::High_intensity_white, Color::Blue);
 	Printer _printer(Color::Black, Color::Yellow);
-	printAtCenterOfLine(5, "Number of train     Name           Departure  Arrival    Free Places", printer);
+	printAtCenterOfLine(5, "Number of train     Name           Departure  Arrival    P    K    L   ", printer);
 	for (int i = 0; i < trains.size(); ++i)
 	{
 		TrainInformation currentTrain = trains[i];
@@ -51,7 +60,6 @@ void TableView::draw()
 		}
 	}
 	printAtCenterOfLine(28, "Press ESC to exit", printer);
-	
 }
 
 View* TableView::handle()
@@ -61,37 +69,42 @@ View* TableView::handle()
 	switch (key)
 	{
 	case KEY_DOWN:
-	{
-		if (selectedOption != trains.size() - 1)
 		{
-			++selectedOption;
+			if (selectedOption != trains.size() - 1)
+			{
+				++selectedOption;
+			}
+			else
+			{
+				selectedOption = 0;
+			}
+			break;
 		}
-		else
-		{
-			selectedOption = 0;
-		}
-		break;
-	}
 	case KEY_UP:
-	{
-		if (selectedOption == 0)
 		{
-			selectedOption = trains.size() - 1;
+			if (selectedOption == 0)
+			{
+				selectedOption = trains.size() - 1;
+			}
+			else
+			{
+				--selectedOption;
+			}
+			break;
 		}
-		else
-		{
-			--selectedOption;
-		}
-		break;
-	}
 	case KEY_ENTER:
-	{
-		CustomerOrder::setTrainNumber(trains[selectedOption].getNumber());
-		newView = new CoachView();
-		break;
-	}
+		{
+			if (trains.size() > 0)
+			{
+				CustomerOrder::setTrainNumber(trains[selectedOption].getNumber());
+				newView = new CoachView();
+			}
+			else
+				newView = new StartView();
+			break;
+		}
 	case KEY_ESCAPE:
-		newView = NULL;
+		newView = new StartView();
 	}
 	return newView;
 }

@@ -11,6 +11,8 @@ class CoachView : public View
 {
 	TrainInformation inf;
 	int IsSelected = 0;
+
+	void drawTrains(size_t qntOfCars);
 	
 public:
 	CoachView();

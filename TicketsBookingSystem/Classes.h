@@ -2,6 +2,7 @@
 #include <vector>
 #include "CustomerOrder.h"
 #include <iostream>
+#include <tuple>
 
 using namespace std;
 
@@ -28,7 +29,6 @@ public:
 	double getDistance() const;
 
 	const string& getTimeOfArrival() const;
-
 
 	void setName(const string& name);
 
@@ -112,6 +112,8 @@ class TrainInformation
 public:
 
 	int getNumOfFreeSeats() const;
+
+	tuple<int, int, int> getNumOfFreeSeatsByTrainTypes();
 
 	const string& getTimeOfDeparture() const;
 

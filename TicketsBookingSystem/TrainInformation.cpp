@@ -12,6 +12,27 @@ int TrainInformation::getNumOfFreeSeats() const
 	return freeSeats;
 }
 
+tuple<int, int, int> TrainInformation::getNumOfFreeSeatsByTrainTypes()
+{
+	int p = 0, c = 0, l = 0;
+	for (const auto& el: RailCars)
+	{
+		switch (el.getType())
+		{
+		case RailCarType::ReservedSeat:
+			p += el.getNumOfFreeSeats();
+			break;
+		case RailCarType::Compartment:
+			c += el.getNumOfFreeSeats();
+			break;
+		case RailCarType::Luxe:
+			l += el.getNumOfFreeSeats();
+			break;
+		}
+	}
+	return make_tuple(p, c, l);
+}
+
 const string& TrainInformation::getTimeOfDeparture() const
 {
 	string from = CustomerOrder::getFrom();

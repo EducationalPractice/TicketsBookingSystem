@@ -6,6 +6,15 @@
 class View
 {
 public:
+	static void clear()
+	{
+		system("cls");
+
+		system("Color 1F");
+
+		Sleep(10);
+	}
+	
 	virtual void draw() = 0;
 	virtual View* handle() = 0;
 };
@@ -21,7 +30,7 @@ private:
 	bool dateEntered = false;
 	int counter = 0;
 	bool checkIfDateIsOk(string date);
-	void enterLine(string& city, bool & isEntered,int maxLength, int& counter);
+	void enterLine(string& city, bool& isEntered, int maxLength, int& counter);
 public:
 	StartView();
 	void draw();

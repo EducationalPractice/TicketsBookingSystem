@@ -21,29 +21,34 @@ private:
 	                      const string& where,
 	                      const vector<StationInformation>* stations);
 
-	static void setTrainName(tinyxml2::XMLNode* pRoot, TrainInformation& train);
+	static void setTrainName(tinyxml2::XMLElement* pRoot, TrainInformation& train);
 
-	static void setTrainNumber(tinyxml2::XMLNode* pRoot, TrainInformation& train);
+	static void setTrainNumber(tinyxml2::XMLElement* pRoot, TrainInformation& train);
 
 
 	static void readOrder(tinyxml2::XMLElement* pOrder,
 	                      vector<RailCarInformation>& RailCars);
 
-	static void readOrders(tinyxml2::XMLNode* pDate,
+	static void readOrders(tinyxml2::XMLElement* pDate,
 	                       vector<RailCarInformation>& RailCars);
 
-	static void loadRailCars(tinyxml2::XMLNode* pRoot, TrainInformation& train);
+	static void loadRailCars(tinyxml2::XMLElement* pRoot, TrainInformation& train);
 
 
 	static bool loadTrain(const string& num,
 	                      const string& date, TrainInformation& train);
 
+	static bool loadTrain(tinyxml2::XMLElement* pTrain,
+		const string& num,
+		const string& date,
+		TrainInformation& train);
+
 	static StationInformation proccesStation(tinyxml2::XMLElement* pStation);
 
-	static void getTrainStations(tinyxml2::XMLNode* pRoot,
+	static void getTrainStations(tinyxml2::XMLElement* pRoot,
 	                             vector<StationInformation>& stations);
 
-	static void getTrainsDates(tinyxml2::XMLNode* pRoot,
+	static void getTrainsDates(tinyxml2::XMLElement* pRoot,
 	                           vector<string>& dates);
 
 	static bool checkTrainByRoute(const string& from,
@@ -55,10 +60,13 @@ private:
 
 	static void chain(vector<TrainInformation>& trains);
 
+	static tinyxml2::XMLElement* getTrain(tinyxml2::XMLDocument& doc,
+	                                      const string& num);
+
 	static tinyxml2::XMLElement* formCustomerOrder(tinyxml2::XMLDocument& doc,
 	                                               size_t place);
 
-	static tinyxml2::XMLElement* getDateLink(tinyxml2::XMLNode* pRoot,
+	static tinyxml2::XMLElement* getDateLink(tinyxml2::XMLElement* pRoot,
 	                                         const string& date);
 
 
