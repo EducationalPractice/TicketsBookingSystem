@@ -3,6 +3,7 @@
 #include "CustomerOrder.h"
 #include "ConsoleFunctions.h"
 #include <conio.h>
+#include "CoachView.h"
 
 TableView::TableView()
 {
@@ -11,22 +12,22 @@ TableView::TableView()
 
 void TableView::drawLine(Printer printer, int i, TrainInformation currentTrain)
 {
-	setCursoreAtPosition(2, i * 2 + 8);
+	setCursoreAtPosition(12, i * 2 + 8);
 	printer.print(currentTrain.getNumber());
-	setCursoreAtPosition(9, i * 2 + 8);
+	setCursoreAtPosition(23, i * 2 + 8);
 	if (currentTrain.getFullName().length() > 12)
 	{
-		printer.print(currentTrain.getFullName().substr(0, 12));
+		printer.print(currentTrain.getFullName().substr(0, 15));
 	}
 	else
 	{
 		printer.print(currentTrain.getFullName());
 	}
-	setCursoreAtPosition(26, i * 2 + 8);
+	setCursoreAtPosition(43, i * 2 + 8);
 	printer.print(currentTrain.getTimeOfDeparture());
-	setCursoreAtPosition(36, i * 2 + 8);
+	setCursoreAtPosition(53, i * 2 + 8);
 	printer.print(currentTrain.getTimeOfArrival());
-	setCursoreAtPosition(49, i * 2 + 8);
+	setCursoreAtPosition(66, i * 2 + 8);
 	printer.print(to_string(currentTrain.getNumOfFreeSeats()));
 	cout << endl;
 }
@@ -34,8 +35,8 @@ void TableView::drawLine(Printer printer, int i, TrainInformation currentTrain)
 void TableView::draw()
 {
 	Printer printer(Color::High_intensity_white, Color::Blue);
-	Printer _printer(Color::High_intensity_white, Color::Yellow);
-	printAtCenterOfLine(5, "#      Name          Departure Arrival    Free Places", printer);
+	Printer _printer(Color::Black, Color::Yellow);
+	printAtCenterOfLine(5, "Number of train     Name           Departure  Arrival    Free Places", printer);
 	for (int i = 0; i < trains.size(); ++i)
 	{
 		TrainInformation currentTrain = trains[i];
@@ -84,8 +85,7 @@ View* TableView::handle()
 	case KEY_ENTER:
 	{
 		CustomerOrder::setTrainNumber(trains[selectedOption].getNumber());
-		//HERE MUST BE THIRD VIEW, NOT STARTVIEW
-		newView = new StartView();
+		newView = new CoachView();
 	}
 	}
 	return newView;
