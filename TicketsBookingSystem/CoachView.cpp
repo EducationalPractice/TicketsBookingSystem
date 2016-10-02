@@ -24,6 +24,8 @@ HBRUSH PenBlue = CreateSolidBrush(RGB(90, 126, 143));
 HBRUSH PenLightBlue = CreateSolidBrush(RGB(152, 188, 205));
 HBRUSH PenDarkerWhite = CreateSolidBrush(RGB(243, 243, 243));
 HBRUSH PenBlack = CreateSolidBrush(RGB(0, 0, 0));
+HPEN HighBluePen = CreatePen(PS_SOLID, 2, RGB(6, 15, 128));
+HBRUSH PenHighBlue = CreateSolidBrush(RGB(6, 15, 128));
 
 void drawFrame(int x1, int y1, int x2, int y2)
 {
@@ -37,6 +39,14 @@ void deleteFrame(int x1, int y1, int x2, int y2)
 	SelectObject(dc, PenBlue);
 	Rectangle(dc, x1, y1, x2, y2);
 }
+
+void deleteCoaches(int x1, int y1, int x2, int y2)
+{
+	SelectObject(dc, HighBluePen);
+	SelectObject(dc, PenHighBlue);
+	Rectangle(dc, x1, y1, x2, y2);
+}
+
 
 void drawSquare(int x1, int y1)
 {
@@ -254,6 +264,7 @@ View* CoachView::handle()
 		if (input == 13)
 		{
 			CustomerOrder::setRailCarNumber(IsSelected+1);
+			deleteCoaches(40, 200, 742, 242);
 			newView = new CarView();
 			break;
 		}
