@@ -268,6 +268,12 @@ View* CoachView::handle()
 			newView = new CarView();
 			break;
 		}
+		if (input == 27)
+		{
+			deleteCoaches(40, 200, 742, 242);
+			newView = new TableView();
+			break;
+		}
 		switch (input)
 		{
 		case KEY_LEFT: IsSelected -= 1; break;
